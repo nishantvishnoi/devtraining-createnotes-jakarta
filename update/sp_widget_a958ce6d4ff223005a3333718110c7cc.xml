@@ -6,6 +6,7 @@
 	/* widget controller */
 	var c = this;
 	c.selectItem = function(idx) {
+		console.log('Notes client '+ c.data.notes)
 		var id = c.data.notes[idx].sys_id;
 		console.log('Note ID: ' + id);
 		$rootScope.noteID = id;
@@ -13,7 +14,6 @@
 
 	}
 			$rootScope.$on('updateNoteList', function(event,data) {
-			console.log('on from Notes List-1');
 			c.server.get({
 			action: 'updateNoteList',
 			noteID: c.data.noteID
@@ -44,6 +44,7 @@
         <roles/>
         <script><![CDATA[(function() {
 //create an array to populate without notes
+console.log('server script from Notes List ' + input);
 data.notes = [];
 var noteGR = new GlideRecord('x_snc_createnotes_note');
 noteGR.addQuery('user', gs.getUser().getID());
@@ -57,11 +58,9 @@ $sp.getRecordDisplayValues(noteObj, noteGR, 'number,title,note,sys_id');
 noteObj.note = noteGR.getValue('note').slice(0,20);
 //push the populated obj into the array
 data.notes.push(noteObj);
-
-if(input && input.action == 'updateNoteList'){
-	console.log('Notes List is called from server script');
-	console.log('noteObj title is'+ noteObj.title);
 }
+if (input && input.action == 'updateNoteList'){
+	console.log('server script from Notes List updateNoteList '+ input)
 }
 })();]]></script>
         <servicenow>false</servicenow>
@@ -69,14 +68,14 @@ if(input && input.action == 'updateNoteList'){
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-01-04 13:15:23</sys_created_on>
         <sys_id>a958ce6d4ff223005a3333718110c7cc</sys_id>
-        <sys_mod_count>38</sys_mod_count>
+        <sys_mod_count>50</sys_mod_count>
         <sys_name>Notes List</sys_name>
         <sys_package display_value="CreateNotes" source="x_snc_createnotes">df5fd9a5090232007f44e1046c8ff69f</sys_package>
         <sys_policy/>
         <sys_scope display_value="CreateNotes">df5fd9a5090232007f44e1046c8ff69f</sys_scope>
         <sys_update_name>sp_widget_a958ce6d4ff223005a3333718110c7cc</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-01-30 16:30:36</sys_updated_on>
+        <sys_updated_on>2019-02-07 05:36:43</sys_updated_on>
         <template><![CDATA[<div class="panel panel-default">
 <div class="panel-heading clearfix">
 <h3 class="panel-title pull-left">

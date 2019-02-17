@@ -4,8 +4,8 @@
         <category>custom</category>
         <client_script><![CDATA[function($scope,$rootScope) {
 		/* widget controller */
+	
 		var c = this;
-
 		$rootScope.$on('selectNote', function(event,data) {
 			c.server.get({
 				action: 'getNote',
@@ -16,6 +16,7 @@
 				c.data.noteID = r.data.note.sys_id;
 			});
 		});
+	//console.log('outside r'+ c.data.note.title);
 	 c.updateNote = function(updateType) {
 		c.server.get({
 			action: 'updateNote',
@@ -23,8 +24,7 @@
 			noteBody: c.data.note,
 			noteTitle: c.data.title
 		}).then(function(r) {
-			console.log('emit from Body');
-			$rootScope.$emit('updateNoteList',c.data.noteID);
+			$rootScope.$emit('updateNoteList',r.data);
 		});
 	}
 	}]]></client_script>
@@ -45,7 +45,6 @@
         <roles/>
         <script><![CDATA[(function() {
 		/* populate the 'data' object */
-
 		if (input && input.noteID) {
 			var note = new GlideRecord('x_snc_createnotes_note');
 			if (note.get(input.noteID)) {
@@ -57,7 +56,6 @@
 				note.title = input.noteTitle; 
 				note.note = input.noteBody; 
 				note.update(); 
-					console.log('update done');
 				}
 			}
 			
@@ -68,14 +66,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-01-04 13:17:42</sys_created_on>
         <sys_id>33d8462d4ff223005a3333718110c773</sys_id>
-        <sys_mod_count>12</sys_mod_count>
+        <sys_mod_count>21</sys_mod_count>
         <sys_name>Notes Body</sys_name>
         <sys_package display_value="CreateNotes" source="x_snc_createnotes">df5fd9a5090232007f44e1046c8ff69f</sys_package>
         <sys_policy/>
         <sys_scope display_value="CreateNotes">df5fd9a5090232007f44e1046c8ff69f</sys_scope>
         <sys_update_name>sp_widget_33d8462d4ff223005a3333718110c773</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-01-30 13:42:16</sys_updated_on>
+        <sys_updated_on>2019-02-07 05:22:26</sys_updated_on>
         <template><![CDATA[<div class="panel panel-default" ng-show="c.data.noteID">
   <div class="panel-heading clearfix">
     <div class="row">
